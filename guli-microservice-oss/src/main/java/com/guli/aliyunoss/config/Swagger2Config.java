@@ -21,23 +21,22 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class Swagger2Config {
 
     @Bean
-    public Docket webApiConfig() {
-        return new Docket((DocumentationType.SWAGGER_2))
-                .apiInfo(webApiInfo())
+    public Docket adminApiConfig() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("adminApi")
+                .apiInfo(adminApiInfo())
                 .select()
-                .paths(Predicates.not(PathSelectors.regex("/error.*")))
+                .paths(Predicates.and(PathSelectors.regex("/admin/.*")))
                 .build();
-
-
     }
 
-    private ApiInfo webApiInfo(){
+    private ApiInfo adminApiInfo(){
 
         return new ApiInfoBuilder()
-                .title("文件上传通用服务")
-                .description("本文档描述了文件上传通用服务接口定义")
+                .title("后台管理系统-课程中心API文档")
+                .description("本文档描述了阿里云oss服务接口定义")
                 .version("1.0")
-                .contact(new Contact("kaixuan", "http://atguigu.com", "670973127@qq.com"))
+                .contact(new Contact("kaixuan", "http://47.103.11.167/", "670973127@qq.com"))
                 .build();
     }
 }

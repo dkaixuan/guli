@@ -34,7 +34,7 @@ public class TeacherAdminController {
     @GetMapping
     public R list() {
         List<Teacher> list = teacherService.list(null);
-        return R.ok().data("item", list).message("查询成功");
+        return R.ok().data("items", list).message("查询成功");
     }
 
     @ApiOperation("根据id删除讲师")

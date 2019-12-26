@@ -16,7 +16,12 @@ public enum ResultCodeEnum {
     JSON_PARSE_ERROR(false, 21002, "json解析异常"),
     PARAM_ERROR(false, 21003, "参数不正确"),
     FILE_UPLOAD_ERROR(false, 21004, "文件上传错误"),
-    EXCEL_DATA_IMPORT_ERROR(false, 21005, "Excel数据导入错误");
+    VIDEO_UPLOAD_TOMCAT_ERROR(false, 22001, "服务器内部错误"),
+    VIDEO_UPLOAD_ALIYUN_ERROR(false, 22002, "视频文件上传错误"),
+    EXCEL_DATA_IMPORT_ERROR(false, 21005, "Excel数据导入错误"),
+    REFRESH_VIDEO_PLAYAUTH_ERROR(false,21006,"刷新上传凭证异常"),
+    FETCH_PLAYAUTH_ERROR(false,21008,"获取播放凭证异常"),
+    FETCH_VIDEO_PLAYAUTH_ERROR(false, 21007, "获取上传凭证异常");
 
     private Boolean success;
 

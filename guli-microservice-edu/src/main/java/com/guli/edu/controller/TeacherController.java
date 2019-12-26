@@ -1,9 +1,24 @@
 package com.guli.edu.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.guli.common.constants.ResultCodeEnum;
+import com.guli.common.constants.vo.R;
+import com.guli.common.exception.GuliException;
+import com.guli.edu.entity.Course;
+import com.guli.edu.entity.Teacher;
+import com.guli.edu.query.TeacherQuery;
+import com.guli.edu.service.CourseService;
+import com.guli.edu.service.TeacherService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -13,9 +28,64 @@ import org.springframework.web.bind.annotation.RestController;
  * @author kaixuan
  * @since 2019-11-04
  */
+@Api(description = "前台讲师模块")
+@CrossOrigin
 @RestController
 @RequestMapping("/edu/teacher")
 public class TeacherController {
+
+
+    @Autowired
+    private TeacherService teacherService;
+
+    @Autowired
+    private CourseService courseService;
+
+
+    @ApiOperation("讲师列表")
+    @GetMapping()
+    public R list() {
+        List<Teacher> list = teacherService.list(null);
+        return R.ok().data("items", list);
+    }
+
+
+    @ApiOperation(value = "根据ID查询讲师")
+    @GetMapping(value = "{id}")
+    public R getById(
+            @ApiParam(name = "id", value = "讲师ID", required = true)
+            @PathVariable String id){
+
+        //查询讲师信息
+        Teacher teacher = teacherService.getById(id);
+
+        //根据讲师id查询这个讲师的课程列表
+        List<Course> courseList = courseService.selectByTeacherId(id);
+
+        return R.ok().data("teacher", teacher).data("courseList", courseList);
+    }
+
+
+    @ApiOperation(value = "分页讲师列表")
+    @GetMapping(value = "{page}/{limit}")
+    public R pageList(
+            @ApiParam(name = "page", value = "当前页码", required = true)
+            @PathVariable Long page,
+
+            @ApiParam(name = "limit", value = "每页记录数", required = true)
+            @PathVariable Long limit){
+
+        Page<Teacher> pageParam = new Page<>(page, limit);
+
+        Map<String, Object> map = teacherService.pageListWeb(pageParam);
+
+        return  R.ok().data(map);
+    }
+
+
+
+
+
 
 }
 

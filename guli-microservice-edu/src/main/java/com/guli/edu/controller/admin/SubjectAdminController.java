@@ -52,7 +52,6 @@ public class SubjectAdminController {
     @ApiOperation(value = "嵌套数据列表")
     @GetMapping
     public R nestedList(){
-
         List<SubjectNestedVo> subjectNestedVoList = subjectService.nestedList();
         return R.ok().data("items", subjectNestedVoList);
     }
